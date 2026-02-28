@@ -15,6 +15,7 @@ model User {
   role     String
 
   bids     Bid[]
+  submissions   BidSubmission[]
 }
 
 model Bid {
@@ -28,4 +29,17 @@ model Bid {
   createdAt   DateTime @default(now())
 
   merchant    User     @relation(fields: [merchantId], references: [id])
+  submissions   BidSubmission[]
+}
+
+model BidSubmission {
+  id             Int      @id @default(autoincrement())
+  price          Float
+  estimatedTime  Int
+  transporterId  Int
+  bidId          Int
+  createdAt      DateTime @default(now())
+
+  transporter    User     @relation(fields: [transporterId], references: [id])
+  bid            Bid      @relation(fields: [bidId], references: [id])
 }
