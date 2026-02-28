@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     String
+
+  bids     Bid[]
+}
+
+model Bid {
+  id          Int      @id @default(autoincrement())
+  title       String
+  origin      String
+  destination String
+  price       Float
+  status      String   @default("open")
+  merchantId  Int
+  createdAt   DateTime @default(now())
+
+  merchant    User     @relation(fields: [merchantId], references: [id])
+}
