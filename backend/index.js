@@ -24,7 +24,37 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({
   adapter,
 });
+// 🚛 Transporter submits offer on a delivery request
+app.post("/bids/:bidId/submit", auth, async (req, res) => {
+  try {
+    const bidId = parseInt(req.params.bidId);
+    const { price, estimatedTime } = req.body;
 
+    const submission = await prisma.bidSubmission.create({
+      data: {
+        price,
+        estimatedTime,
+        bidId,
+        transporterId: req.user.userId,
+      },
+    });
+
+    res.json(submission);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+// 📊 View all transporter submissions for a delivery request
+app.get("/bids/:bidId/submissions", async (req, res) => {
+  const bidId = parseInt(req.params.bidId);
+
+  const submissions = await prisma.bidSubmission.findMany({
+    where: { bidId },
+    include: { transporter: true },
+  });
+
+  res.json(submissions);
+});
 app.get("/", (req, res) => {
   res.send("ByteCargo API is running 🚚");
 });
