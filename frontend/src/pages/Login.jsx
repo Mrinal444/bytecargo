@@ -1,22 +1,29 @@
-import React, { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import AuthContext from '../context/AuthContext'
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
-export default function Login(){
-  const [email,setEmail]=useState('')
-  const [password,setPassword]=useState('')
-  const [error,setError]=useState('')
-  const { login } = useContext(AuthContext)
-  const nav = useNavigate()
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useContext(AuthContext);
+  const nav = useNavigate();
 
-  async function onSubmit(e){
-    e.preventDefault()
-    setError('')
-    try{
-      await login(email,password)
-      nav('/')
-    }catch(err){
-      setError(err?.response?.data?.error || err.message)
+  async function onSubmit(e) {
+    e.preventDefault();
+    setError("");
+    try {
+      const user = await login(email, password);
+
+      if (user.role === "MERCHANT") {
+        nav("/merchant");
+      } else if (user.role === "TRANSPORTER") {
+        nav("/transporter");
+      } else {
+        nav("/");
+      }
+    } catch (err) {
+      setError(err?.response?.data?.error || err.message);
     }
   }
 
@@ -27,12 +34,23 @@ export default function Login(){
         {error && <div className="text-red-600 mb-2">{error}</div>}
         <form onSubmit={onSubmit}>
           <label className="block mb-2 text-sm">Email</label>
-          <input className="w-full border p-2 mb-3" value={email} onChange={e=>setEmail(e.target.value)} />
+          <input
+            className="w-full border p-2 mb-3"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <label className="block mb-2 text-sm">Password</label>
-          <input type="password" className="w-full border p-2 mb-3" value={password} onChange={e=>setPassword(e.target.value)} />
-          <button className="w-full bg-indigo-600 text-white py-2 rounded">Login</button>
+          <input
+            type="password"
+            className="w-full border p-2 mb-3"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="w-full bg-indigo-600 text-white py-2 rounded">
+            Login
+          </button>
         </form>
       </div>
     </div>
-  )
+  );
 }
