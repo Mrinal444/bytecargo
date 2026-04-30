@@ -4,42 +4,67 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MERCHANT
+  TRANSPORTER
+}
+
+enum BidStatus {
+  OPEN
+  ASSIGNED
+  CLOSED
+  CANCELLED
+}
+
+enum SubmissionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
-  role     String
+  id          Int             @id @default(autoincrement())
+  name        String
+  email       String          @unique
+  password    String
+  role        Role
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 
-  bids     Bid[]
-  submissions   BidSubmission[]
+  bids        Bid[]
+  submissions BidSubmission[]
 }
 
 model Bid {
-  id          Int      @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   title       String
   origin      String
   destination String
   price       Float
-  status      String   @default("open")
+  status      BidStatus       @default(OPEN)
   merchantId  Int
-  createdAt   DateTime @default(now())
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 
-  merchant    User     @relation(fields: [merchantId], references: [id])
-  submissions   BidSubmission[]
+  merchant    User            @relation(fields: [merchantId], references: [id])
+  submissions BidSubmission[]
 }
 
 model BidSubmission {
-  id             Int      @id @default(autoincrement())
-  price          Float
-  estimatedTime  Int
-  transporterId  Int
-  bidId          Int
-  createdAt      DateTime @default(now())
+  id            Int               @id @default(autoincrement())
+  price         Float
+  estimatedTime Int
+  transporterId Int
+  bidId         Int
+  status        SubmissionStatus   @default(PENDING)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
 
-  transporter    User     @relation(fields: [transporterId], references: [id])
-  bid            Bid      @relation(fields: [bidId], references: [id])
+  transporter   User              @relation(fields: [transporterId], references: [id])
+  bid           Bid               @relation(fields: [bidId], references: [id])
+
+  @@unique([transporterId, bidId])
 }
