@@ -156,18 +156,19 @@ GitHub: https://github.com/your-username
 ## 📸 Screenshots
 
 ### Landing Page
-![Landing Page](<img width="1873" height="1117" alt="Screenshot 2026-05-01 230605" src="https://github.com/user-attachments/assets/60f02a73-ba27-4281-8517-9cadd034e0ac" />
+<img width="1873" height="1117" alt="Screenshot 2026-05-01 230605" src="https://github.com/user-attachments/assets/60f02a73-ba27-4281-8517-9cadd034e0ac" />
 
-)
+
 
 ### Merchant Dashboard
-![Merchant Dashboard](<img width="1870" height="1107" alt="Screenshot 2026-05-01 231958" src="https://github.com/user-attachments/assets/b0646e8c-9e06-41fc-a3ec-3fbf6895503d" />
+<img width="1870" height="1107" alt="Screenshot 2026-05-01 231958" src="https://github.com/user-attachments/assets/b0646e8c-9e06-41fc-a3ec-3fbf6895503d" />
 
-)
+
 
 ### Transporter Dashboard
-![Transporter Dashboard](<img width="1859" height="1119" alt="Screenshot 2026-05-01 231918" src="https://github.com/user-attachments/assets/d9d35786-78d0-4223-a09f-3109d7bfe166" />
-)
+<img width="1859" height="1119" alt="Screenshot 2026-05-01 231918" src="https://github.com/user-attachments/assets/1bb886bd-2767-4658-bd98-7f34fa57a1d6" />
+ 
+
 
 ---
 
