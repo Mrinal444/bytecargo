@@ -11,8 +11,10 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
+    "https://bytecargo-one.vercel.app",
     "https://bytecargo-agtnesl05-mrinal444s-projects.vercel.app"
-  ]
+  ],
+  credentials: true
 }));
 app.use(express.json());
 
