@@ -8,7 +8,7 @@ export default function BidCard({ bid }) {
         <div>
           <h3 className="text-lg font-semibold">{bid.title}</h3>
           <p className="text-sm text-gray-600">{bid.origin} → {bid.destination}</p>
-          <p className="mt-2 font-medium">${bid.price.toFixed(2)}</p>
+          <p className="mt-2 font-medium">₹{Number(bid.price).toFixed(2)}</p>
         </div>
         <div className="text-right">
           <p className="text-sm">{bid.merchant?.name}</p>
